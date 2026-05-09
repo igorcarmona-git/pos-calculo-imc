@@ -59,7 +59,7 @@ class MainActivity : AppCompatActivity() {
             btCalculateOnClick()
         }
 
-        //Quando é click longo, no final, true no retorno, manter pressionado nao executa a funçao.
+        //Quando é click longo, no final, true no retorno, manter pressionado nao executa a funçaoo.
         btCalculate.setOnLongClickListener {
             Toast.makeText(
                 this,
