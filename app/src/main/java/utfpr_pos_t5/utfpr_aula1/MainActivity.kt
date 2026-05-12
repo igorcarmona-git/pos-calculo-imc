@@ -89,8 +89,9 @@ class MainActivity : AppCompatActivity() {
         }
         initView()
 
-        Log.e("Lifecycle", "Error")
-        Log.w("Lifecycle", "Warning")
+        Log.e("MainActivity_error", "Error")
+        Log.w("MainActivity_warning", "Warning")
+        Log.d("MainActivity_debug", "Debug")
 
         btCalculate.setOnClickListener {
             btCalculateOnClick()
