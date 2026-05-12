@@ -26,7 +26,15 @@ import kotlin.math.pow
 //R.id.btCalcular
 //R.layout.activity_principal
 
+//----------------------------------------------------- Erros aleatórios
+// Quando der um erro aleatorio, e voce nao sabe o que pode ser, pode ir em "Build > Clean and
+// Assemble Project with Tests" e limpar o projeto.
+
 class MainActivity : AppCompatActivity() {
+    // lateinit --> Declara uma variável sem inicializar no momento da declaração.
+    // Ela precisa ser inicializada antes de ser acessada.
+    // Se for acessada antes de receber valor, causa erro em tempo de execução.
+    // (UninitializedPropertyAccessException)
     private lateinit var etWeight: EditText
     private lateinit var etHeight: EditText
     private lateinit var tvResult: TextView
@@ -41,6 +49,35 @@ class MainActivity : AppCompatActivity() {
         btClear = findViewById(R.id.btClear)
     }
 
+    private fun btClearOnClick() {
+        etWeight.setText("")
+        etWeight.requestFocus()
+        etHeight.setText("")
+        tvResult.text = "IMC: "
+    }
+
+    // é possivel copiar codigo java e ao colar, a IDE converte para Kotlin automaticamente
+    private fun btCalculateOnClick() {
+        val weight = etWeight.text.toString().toDoubleOrNull()
+        val heightCm = etHeight.text.toString().toDoubleOrNull()
+
+        if (weight == null) {
+            etWeight.error = "Digite um peso válido"
+            return
+        }
+
+        if (heightCm == null) {
+            etHeight.error = "Digite uma altura válida"
+            return
+        }
+
+        val heightMeters = heightCm / 100.0
+        val imc = weight / heightMeters.pow(2.0)
+
+        tvResult.text = "IMC: %.2f".format(imc)
+    }
+
+    // ------------------------------------------ MAIN
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -72,33 +109,5 @@ class MainActivity : AppCompatActivity() {
         btClear.setOnClickListener{
             btClearOnClick()
         }
-    }
-
-    private fun btClearOnClick() {
-        etWeight.setText("")
-        etWeight.requestFocus()
-        etHeight.setText("")
-        tvResult.text = "IMC: "
-    }
-
-    // é possivel copiar codigo java e ao colar, a IDE converte para Kotlin automaticamente
-    private fun btCalculateOnClick() {
-        val weight = etWeight.text.toString().toDoubleOrNull()
-        val heightCm = etHeight.text.toString().toDoubleOrNull()
-
-        if (weight == null) {
-            etWeight.error = "Digite um peso válido"
-            return
-        }
-
-        if (heightCm == null) {
-            etHeight.error = "Digite uma altura válida"
-            return
-        }
-
-        val heightMeters = heightCm / 100.0
-        val imc = weight / heightMeters.pow(2.0)
-
-        tvResult.text = "IMC: %.2f".format(imc)
     }
 }
